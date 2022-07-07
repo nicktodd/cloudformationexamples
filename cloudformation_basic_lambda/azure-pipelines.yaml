@@ -9,7 +9,7 @@
 
   variables:
     BuildConfiguration: release
-    BUCKET_NAME: cloudformation.conygre.com
+    BUCKET_NAME: azuredevops.conygre.com
     S3_PREFIX: samplestack
     STACK_NAME: BasicLambdaStack
     
