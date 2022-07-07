@@ -33,6 +33,14 @@
     inputs:
       regionName: 'eu-west-1'
       awsCommand: 's3'
+      awsSubCommand: 'ls'
+
+
+  - task: AWSCLI@1
+  # Run the following command: aws cloudformation package --template template.yml --s3-bucket $S3_BUCKET --output-template template-export.yml
+    inputs:
+      regionName: 'eu-west-1'
+      awsCommand: 's3'
       awsSubCommand: 'cp'
       awsArguments: 'lambda.zip s3://$(BUCKET_NAME)/$(S3_PREFIX)/lambda.zip'
 
