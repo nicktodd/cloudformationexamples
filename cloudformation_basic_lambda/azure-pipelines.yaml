@@ -1,0 +1,45 @@
+  # Run pipeline whenever a commit or tag is pushed
+  trigger:
+    branches:
+      include:
+      - '*'
+    tags:
+      include: 
+      - '*'
+
+  variables:
+    BuildConfiguration: release
+    BUCKET_NAME: cloudformation.conygre.com
+    S3_PREFIX: samplestack
+    STACK_NAME: BasicLambdaStack
+    
+
+  pool:
+    vmImage: ubuntu-latest
+
+  steps:
+   
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: 'lambda' 
+      includeRootFolder: false
+      archiveType: 'zip' # Options: zip, 7z, tar, wim
+      archiveFile: 'lambda.zip' 
+      replaceExistingArchive: true 
+
+
+  - task: AWSCLI@1
+  # Run the following command: aws cloudformation package --template template.yml --s3-bucket $S3_BUCKET --output-template template-export.yml
+    inputs:
+      regionName: 'eu-west-1'
+      awsCommand: 's3'
+      awsSubCommand: 'cp'
+      awsArguments: 'lambda.zip s3://$(BUCKET_NAME)/$(S3_PREFIX)/lambda.zip'
+
+
+  - task: AWSCLI@1
+    inputs:
+      regionName: 'eu-west-1'
+      awsCommand: 'cloudformation'
+      awsSubCommand: 'deploy'
+      awsArguments: '--template-file template.yaml --stack-name $(STACK_NAME) --capabilities CAPABILITY_IAM'
