@@ -50,4 +50,4 @@
       regionName: 'eu-west-1'
       awsCommand: 'cloudformation'
       awsSubCommand: 'deploy'
-      awsArguments: '--template-file cloudformation_basic_lambda/template.yaml --stack-name $(STACK_NAME) --capabilities CAPABILITY_IAM'
+      awsArguments: '--template-file cloudformation_basic_lambda/template.yaml --stack-name $(STACK_NAME) --capabilities CAPABILITY_IAM --parameter-overrides UploadBucketName=$(BUCKET_NAME) UploadS3KeyPrefix=$(S3_PREFIX)'
