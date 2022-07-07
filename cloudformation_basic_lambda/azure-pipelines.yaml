@@ -21,7 +21,7 @@
    
   - task: ArchiveFiles@2
     inputs:
-      rootFolderOrFile: 'lambda' 
+      rootFolderOrFile: 'cloudformation_basic_lambda/lambda' 
       includeRootFolder: false
       archiveType: 'zip' # Options: zip, 7z, tar, wim
       archiveFile: 'lambda.zip' 
@@ -42,4 +42,4 @@
       regionName: 'eu-west-1'
       awsCommand: 'cloudformation'
       awsSubCommand: 'deploy'
-      awsArguments: '--template-file template.yaml --stack-name $(STACK_NAME) --capabilities CAPABILITY_IAM'
+      awsArguments: '--template-file cloudformation_basic_lambda/template.yaml --stack-name $(STACK_NAME) --capabilities CAPABILITY_IAM'
