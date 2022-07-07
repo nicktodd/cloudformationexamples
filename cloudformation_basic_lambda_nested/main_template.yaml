@@ -7,21 +7,21 @@ Parameters:
     Type: String
   UploadS3KeyPrefix:
     AllowedPattern: ^[0-9a-zA-Z-/]*$
-    Default: samplenestedstack/
+    Default: samplenestedstack
     Type: String
 Resources:
   NetworkStack:
     Type: AWS::CloudFormation::Stack
     Properties:
       TimeoutInMinutes: 15
-      TemplateURL: !Sub "https://${UploadBucketName}.s3.${AWS::Region}.amazonaws.com/${UploadS3KeyPrefix}network_template.yaml"
+      TemplateURL: !Sub "https://${UploadBucketName}.s3.${AWS::Region}.amazonaws.com/${UploadS3KeyPrefix}/network_template.yaml"
 
 
   LambdaStack:
     Type: AWS::CloudFormation::Stack
     Properties:
       TimeoutInMinutes: 15
-      TemplateURL: !Sub "https://${UploadBucketName}.s3.${AWS::Region}.amazonaws.com/${UploadS3KeyPrefix}lambda_template.yaml"
+      TemplateURL: !Sub "https://${UploadBucketName}.s3.${AWS::Region}.amazonaws.com/${UploadS3KeyPrefix}/lambda_template.yaml"
       Parameters:
         UploadBucketName: !Ref UploadBucketName
         UploadS3KeyPrefix: !Ref UploadS3KeyPrefix

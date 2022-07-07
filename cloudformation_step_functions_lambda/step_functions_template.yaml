@@ -9,7 +9,7 @@ Parameters:
 
   UploadS3KeyPrefix:
     AllowedPattern: ^[0-9a-zA-Z-/]*$
-    Default: samplestepfunctions/
+    Default: samplestepfunctions
     Type: String
 
 
@@ -20,7 +20,7 @@ Resources:
       StateMachineName: HelloWorldStateMachine
       DefinitionS3Location: 
         Bucket: !Ref 'UploadBucketName'
-        Key: !Sub '${UploadS3KeyPrefix}statemachine.json'
+        Key: !Sub '${UploadS3KeyPrefix}/statemachine.json'
       DefinitionSubstitutions:
         HelloLambdaArn: !ImportValue HelloLambdaArn
       RoleArn: !Sub arn:aws:iam::${AWS::AccountId}:role/service-role/StatesExecutionRole-eu-west-1

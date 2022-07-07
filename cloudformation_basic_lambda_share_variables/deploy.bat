@@ -1,16 +1,18 @@
-Rem This deployment would normally done as part of a pipeline
+rem TODO set this value before you launch the stack to be the name of your bucket that the archives will be placed into
+set BUCKET_NAME=cloudformation.conygre.com
+set S3_PREFIX=sharedvariables
+set STACK_NAME=SharedVariables
 
-
-Rem 1. Remove any previous zipped up lambda code
+# 1. Remove any previous zipped up lambda code
 del lambda.zip
 
-Rem 2. Create the zip of the Lambda code
+# 2. Create the zip of the Lambda code
 powershell Compress-Archive ./lambda/* lambda.zip
 
-Rem 3. Upload the Lambda code to an S3 bucket that you have access to
-aws s3 cp lambda.zip s3://cloudformation.conygre.com/samplevariablesstack/lambda.zip
+# 3. Upload the Lambda code to an S3 bucket that you have access to
+aws s3 cp lambda.zip s3://%BUCKET_NAME%/%S3_PREFIX%/lambda.zip
 
-Rem 4. Deploy the Cloudformation templates to your cloud account. The second deployment uses outputs from the first
-aws cloudformation deploy --template-file network_template.yaml --stack-name NetworkDemoStack --capabilities CAPABILITY_IAM
-aws cloudformation deploy --template-file lambda_template.yaml --stack-name LambdaDemoStack --capabilities CAPABILITY_IAM
+#4. Deploy the Cloudformation template to your cloud account
+aws cloudformation deploy --template-file network_template.yaml --stack-name %STACK_NAME%Network --capabilities CAPABILITY_IAM --parameter-overrides UploadBucketName=%BUCKET_NAME% UploadS3KeyPrefix=%S3_PREFIX%
+aws cloudformation deploy --template-file lambda_template.yaml --stack-name %STACK_NAME%Lambda --capabilities CAPABILITY_IAM --parameter-overrides UploadBucketName=%BUCKET_NAME% UploadS3KeyPrefix=%S3_PREFIX%
 

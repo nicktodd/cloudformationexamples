@@ -1,4 +1,4 @@
 def handler(event, context):
-    console.log("hello world");
-    return "hello world";
+    print("hello world")
+    return "hello world"
 
