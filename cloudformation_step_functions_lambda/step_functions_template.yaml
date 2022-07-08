@@ -4,7 +4,7 @@ Description: Step Functions State Machine Deployment.
 Parameters:
   UploadBucketName:
     AllowedPattern: ^[0-9a-zA-Z\.]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
-    Default: cloudformation.conygre.com
+    Default: azuredevops.conygre.com
     Type: String
 
   UploadS3KeyPrefix:
